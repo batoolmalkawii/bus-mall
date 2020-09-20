@@ -25,11 +25,14 @@ const paths = [
     'wine-glass.jpg'
 ];
 
+
 const leftImgEl = document.getElementById('leftImg');
 const midImgEl = document.getElementById('midImg');
 const rightImgEl = document.getElementById('rightImg');
 const imgSection = document.getElementById('imgSection');
 const roundsEl = document.getElementById('rounds');
+const buttonEl = document.createElement('button');
+const aEl = document.createElement('a');
 
 
 function Product(path) {
@@ -77,13 +80,12 @@ function clickHandler(event) {
             render();
         } else {
             imgSection.removeEventListener('click', clickHandler);
-            roundsEl.textContent = `Results`;
+            roundsEl.textContent = ``;
+            createButton();
 
         }
     }
-    console.log(Product.all);
 }
-render();
 // helper functions
 function getName(path) {
     const name = path.split('.')[0];
@@ -106,4 +108,53 @@ function getRightIndex(leftIndex, midIndex) {
     }
     return (rightIndex);
 }
+function createButton() {
+    roundsEl.appendChild(aEl);
+    aEl.appendChild(buttonEl);
+    buttonEl.id = 'button';
+    buttonEl.addEventListener('click', showResults);
+    buttonEl.textContent = 'Results';
+}
+//display results onclick
+function showResults(event) {
+    imgSection.style.display = "none";
+    resultsTable();
+    buttonEl.textContent = 'Play Again';
+    buttonEl.addEventListener('click', playAgain);
+}
+
+function resultsTable() {
+    const tableCont = document.getElementById('results');
+    const tableEl = document.createElement('table');
+    tableCont.appendChild(tableEl);
+    const thEL1 = document.createElement('th');
+    tableEl.appendChild(thEL1);
+    thEL1.textContent = 'Name';
+    const thEl2 = document.createElement('th');
+    tableEl.appendChild(thEl2);
+    thEl2.textContent = 'Shown';
+    const thEl3 = document.createElement('th');
+    tableEl.appendChild(thEl3);
+    thEl3.textContent = 'Clicks';
+    for (let i = 0; i < Product.all.length; i++) {
+        const trEl = document.createElement('tr');
+        tableEl.appendChild(trEl);
+        const tdEl1 = document.createElement('td');
+        trEl.appendChild(tdEl1)
+        tdEl1.textContent = Product.all[i].name;
+        const tdEl2 = document.createElement('td');
+        trEl.appendChild(tdEl2)
+        tdEl2.textContent = Product.all[i].shown;
+        const tdEl3 = document.createElement('td');
+        trEl.appendChild(tdEl3)
+        tdEl3.textContent = Product.all[i].clicks;
+    }
+}
+
+function playAgain(event) {
+    aEl.href = 'index.html';
+}
+
+//calling functions
+render();
 
