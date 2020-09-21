@@ -1,5 +1,6 @@
 'use strict'
 
+let prevIndex = [];
 const maxRounds = 25;
 let round = 1;
 const paths = [
@@ -48,9 +49,10 @@ for (let i = 0; i < paths.length; i++) {
     new Product(paths[i]);
 }
 function render() {
-    const leftIndex = getRandNum(0, Product.all.length - 1);
+    const leftIndex = getLeftIndex();
     const midIndex = getMidIndex(leftIndex);
     const rightIndex = getRightIndex(leftIndex, midIndex);
+    prevIndex = [leftIndex, midIndex, rightIndex];
     leftImgEl.src = Product.all[leftIndex].path;
     midImgEl.src = Product.all[midIndex].path;
     rightImgEl.src = Product.all[rightIndex].path;
@@ -94,19 +96,35 @@ function getName(path) {
 function getRandNum(min, max) {
     return (Math.floor(Math.random() * (max - min + 1)));
 }
+function getLeftIndex() {
+    let leftIndex = getRandNum(0, Product.all.length - 1);
+    while (isPrev(leftIndex)) {
+        leftIndex = getRandNum(0, Product.all.length - 1);
+    }
+    return (leftIndex);
+}
+
 function getMidIndex(leftIndex) {
     let midIndex = getRandNum(0, Product.all.length - 1);
-    while (midIndex === leftIndex) {
-        midIndex = getRandNum(0, Product.all.length - 1)
+    while (isPrev(midIndex) || midIndex === leftIndex) {
+        midIndex = getRandNum(0, Product.all.length - 1);
     }
     return (midIndex);
 }
 function getRightIndex(leftIndex, midIndex) {
     let rightIndex = getRandNum(0, Product.all.length - 1);
-    while (rightIndex === leftIndex || rightIndex === midIndex) {
-        rightIndex = getRandNum(0, Product.all.length - 1)
+    while (isPrev(rightIndex) || rightIndex === leftIndex || rightIndex === midIndex) {
+        rightIndex = getRandNum(0, Product.all.length - 1);
     }
     return (rightIndex);
+}
+function isPrev(index) {
+    for (let i = 0; i < prevIndex.length; i++) {
+        if (index === prevIndex[i]) {
+            return (true);
+        }
+    }
+    return (false);
 }
 function createButton() {
     roundsEl.appendChild(aEl);
