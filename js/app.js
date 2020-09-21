@@ -124,30 +124,14 @@ function showResults(event) {
 }
 
 function resultsTable() {
-    const tableCont = document.getElementById('results');
-    const tableEl = document.createElement('table');
-    tableCont.appendChild(tableEl);
-    const thEL1 = document.createElement('th');
-    tableEl.appendChild(thEL1);
-    thEL1.textContent = 'Name';
-    const thEl2 = document.createElement('th');
-    tableEl.appendChild(thEl2);
-    thEl2.textContent = 'Shown';
-    const thEl3 = document.createElement('th');
-    tableEl.appendChild(thEl3);
-    thEl3.textContent = 'Clicks';
+    const ulCont = document.getElementById('results');
+    ulCont.style.background = '#ddd';
+    const ulEl = document.createElement('ul');
+    ulCont.appendChild(ulEl);
     for (let i = 0; i < Product.all.length; i++) {
-        const trEl = document.createElement('tr');
-        tableEl.appendChild(trEl);
-        const tdEl1 = document.createElement('td');
-        trEl.appendChild(tdEl1)
-        tdEl1.textContent = Product.all[i].name;
-        const tdEl2 = document.createElement('td');
-        trEl.appendChild(tdEl2)
-        tdEl2.textContent = Product.all[i].shown;
-        const tdEl3 = document.createElement('td');
-        trEl.appendChild(tdEl3)
-        tdEl3.textContent = Product.all[i].clicks;
+        const liEl = document.createElement('li');
+        ulEl.appendChild(liEl);
+        liEl.textContent = `${Product.all[i].name} had ${Product.all[i].clicks} votes and was shown ${Product.all[i].shown} times`;
     }
 }
 

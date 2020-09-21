@@ -100,25 +100,20 @@ main{
     color: #ffffff;
     transition-delay: 350ms;
 }
-  table, th, td {
-    border: 0.5px solid #8A8578;
+#results{
     text-align: center;
-    font-family: 'Raleway', sans-serif;
-    color: black;
-    margin-left: 480px;
-    padding-right: 50px;
-    padding-left: 50px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    font-weight: bold;
+    color: #000000;
+    width: 30%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    margin-left: 510px;
     font-size: 20px;
+    line-height: 2em;
+    border-radius: 60px;
+    font-family: 'Raleway', sans-serif;
 }
-th{
-    font-weight: bolder;
-    color: #E8493A;
-}
-table tr td:first-child{
-    font-weight: bolder;
-}
+
 footer{
     clear: both;
     padding-bottom: 20px;
