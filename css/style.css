@@ -56,7 +56,7 @@ main{
     margin-right: 54px;
 }
 #leftImg:hover, #midImg:hover, #rightImg:hover {
-    box-shadow: 0 0 2px 1px #E8493A;
+    box-shadow: 0 0 2px 1px #d43d51;
 }
 #midImg{
     float: left;
@@ -78,7 +78,7 @@ main{
     clear: both;
     margin-bottom: 50px;
     text-align: center;    
-    color: #E8493A;
+    color: #d43d51;
     padding-right: 40px;
     font-size: 50px;
     font-family: 'Raleway', sans-serif;
@@ -87,7 +87,7 @@ main{
 #button{
     border: none;
     border-radius: 70px;
-    background: #E8493A;
+    background: #d43d51;
     padding: 8px 30px;
     color: #FFF;
     font-weight: 700;
@@ -95,8 +95,8 @@ main{
     font-size: 30px;
 }
   #button:hover {
-    box-shadow: 0 0 2px 1px #E8493A;
-    background-color:  #E8493A;
+    box-shadow: 0 0 2px 1px #d43d51;
+    background-color:  #d43d51;
     color: #ffffff;
     transition-delay: 350ms;
 }
@@ -113,7 +113,14 @@ main{
     border-radius: 60px;
     font-family: 'Raleway', sans-serif;
 }
-
+canvas{
+    padding-left: 100px;
+    padding-right: 120px;
+    padding-top: 50px;
+    width:1500px !important;
+    height:600px !important;
+    display: none;
+}
 footer{
     clear: both;
     padding-bottom: 20px;
