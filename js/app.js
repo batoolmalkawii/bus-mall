@@ -1,8 +1,11 @@
 'use strict'
-
+//array to store previous indices
 let prevIndex = [];
+// number of maximum round
 const maxRounds = 25;
+// round counter
 let round = 1;
+// the products image paths
 const paths = [
   'bag.jpg',
   'banana.jpg',
@@ -26,7 +29,7 @@ const paths = [
   'wine-glass.jpg'
 ];
 
-
+// getting the section of the images we want to fill
 const leftImgEl = document.getElementById('leftImg');
 const midImgEl = document.getElementById('midImg');
 const rightImgEl = document.getElementById('rightImg');
@@ -35,7 +38,7 @@ const roundsEl = document.getElementById('rounds');
 const buttonEl = document.createElement('button');
 const aEl = document.createElement('a');
 
-
+// Product constructor
 function Product(path, shown =0, clicks = 0) {
   this.name = getName(path);
   this.path = `img/${path}`;
@@ -48,9 +51,11 @@ Product.all = [];
 for (let i = 0; i < paths.length; i++) {
   new Product(paths[i]);
 }
+// save to local storage
 function setProducts(){
   localStorage.setItem('products', JSON.stringify(Product.all));
 }
+// get from local storage
 function getProducts(){
   let productsArray = JSON.parse(localStorage.getItem('products'));
   if (productsArray){
@@ -61,6 +66,10 @@ function getProducts(){
   }
   render();
 }
+
+// render the page each time it loads
+// choosing products
+// filling the section with images
 function render() {
   const leftIndex = getLeftIndex();
   const midIndex = getMidIndex(leftIndex);
@@ -81,7 +90,7 @@ function render() {
   roundsEl.textContent = `Round ${round} out of ${maxRounds}`;
 
 }
-
+// handle clicking on an image
 imgSection.addEventListener('click', clickHandler);
 function clickHandler(event) {
   if (event.target.id !== 'imgSection') {
@@ -107,9 +116,12 @@ function getName(path) {
   const name = path.split('.')[0];
   return (name);
 }
+// generates a random number in a specific range
 function getRandNum(min, max) {
   return (Math.floor(Math.random() * (max - min + 1)));
 }
+
+//tests if the images are shown in the previous round
 function isPrev(index) {
   for (let i = 0; i < prevIndex.length; i++) {
     if (index === prevIndex[i]) {
@@ -118,6 +130,8 @@ function isPrev(index) {
   }
   return (false);
 }
+
+// chooses first image (no previous)
 function getLeftIndex() {
   let leftIndex = getRandNum(0, Product.all.length - 1);
   while (isPrev(leftIndex)) {
@@ -126,6 +140,7 @@ function getLeftIndex() {
   return (leftIndex);
 }
 
+// chooses second image (no duplicates + no previous)
 function getMidIndex(leftIndex) {
   let midIndex = getRandNum(0, Product.all.length - 1);
   while (isPrev(midIndex) || midIndex === leftIndex) {
@@ -133,6 +148,8 @@ function getMidIndex(leftIndex) {
   }
   return (midIndex);
 }
+
+// chooses third image (no duplicates + no previous)
 function getRightIndex(leftIndex, midIndex) {
   let rightIndex = getRandNum(0, Product.all.length - 1);
   while (isPrev(rightIndex) || rightIndex === leftIndex || rightIndex === midIndex) {
@@ -140,6 +157,8 @@ function getRightIndex(leftIndex, midIndex) {
   }
   return (rightIndex);
 }
+
+// displays button of results
 function createButton() {
   roundsEl.appendChild(aEl);
   aEl.appendChild(buttonEl);
@@ -147,12 +166,16 @@ function createButton() {
   buttonEl.addEventListener('click', showResults);
   buttonEl.textContent = 'Results';
 }
+
+// displays the results in an unordered list
 function showResults() {
   imgSection.style.display = 'none';
   resultsTable();
   buttonEl.textContent = 'Play Again';
   buttonEl.addEventListener('click', playAgain);
 }
+
+//draws the table of results
 function resultsTable() {
   const ulCont = document.getElementById('results');
   ulCont.style.background = '#ddd';
@@ -164,9 +187,13 @@ function resultsTable() {
     liEl.textContent = `${Product.all[i].name} had ${Product.all[i].clicks} votes and was shown ${Product.all[i].shown} times`;
   }
 }
+
+// creates a link to play again button
 function playAgain() {
   aEl.href = 'index.html';
 }
+
+// creates results chart
 function createChart() {
   const ctx = document.getElementById('chart');
   ctx.style.display = 'block';
